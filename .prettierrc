@@ -1,0 +1,12 @@
+{
+  "importOrder": [
+    "^(next|react)$",
+    "<THIRD_PARTY_MODULES>",
+    "^components/(.*)$",
+    "^contexts/(.*)$",
+    "^utils/(.*)$",
+    "^types/(.*)$",
+    "^[./]"
+  ],
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
+}
