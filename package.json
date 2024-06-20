@@ -9,10 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.40.1",
+    "@trpc/client": "11.0.0-rc.390",
+    "@trpc/next": "11.0.0-rc.390",
+    "@trpc/react-query": "11.0.0-rc.390",
+    "@trpc/server": "11.0.0-rc.390",
     "next": "14.2.3",
     "prisma": "^5.14.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
