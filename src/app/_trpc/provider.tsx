@@ -1,8 +1,8 @@
 "use client";
+
+import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
-import React, { useState } from "react";
-
 import { clientApi } from "./client-api";
 
 export default function Provider({ children }: { children: React.ReactNode }) {
@@ -14,7 +14,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
           url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/trpc`,
         }),
       ],
-    })
+    }),
   );
   return (
     <clientApi.Provider client={trpcClient} queryClient={queryClient}>
