@@ -9,7 +9,8 @@
     "lint": "next lint",
     "format": "prettier --check ./**/*.{ts,tsx}",
     "format:fix": "prettier --write ./**/*.{ts,tsx}",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prisma:migrate:dev": "dotenv -e .env.development -- pnpm prisma migrate dev"
   },
   "lint-staged": {
     "./**/*.{ts,tsx}": [
@@ -24,6 +25,7 @@
     "@trpc/next": "11.0.0-rc.390",
     "@trpc/react-query": "11.0.0-rc.390",
     "@trpc/server": "11.0.0-rc.390",
+    "dotenv-cli": "^7.4.2",
     "next": "14.2.3",
     "prisma": "^5.14.0",
     "react": "^18",
