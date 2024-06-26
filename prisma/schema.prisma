@@ -12,3 +12,45 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum UserType {
+  MANAGER
+  SECURYTY
+  ORDINARY
+}
+
+model User {
+  id     String   @id
+  role   UserType 
+  Answer Answer[]
+}
+
+model Part {
+  id       BigInt     @id @default(autoincrement())
+  name     String     @unique
+  Question Question[]
+}
+
+model Question {
+  id           BigInt         @id @default(autoincrement())
+  partId       BigInt
+  text         String
+  part         Part           @relation(fields: [partId], references: [id])
+  AnswerChoice AnswerChoice[]
+}
+
+model AnswerChoice {
+  id         BigInt   @id @default(autoincrement())
+  questionId BigInt
+  text       String
+  question   Question @relation(fields: [questionId], references: [id])
+  Answer     Answer[]
+}
+
+model Answer {
+  id             BigInt       @id @default(autoincrement())
+  userId         String
+  answerChoiceId BigInt
+  user           User         @relation(fields: [userId], references: [id])
+  answerChoice   AnswerChoice @relation(fields: [answerChoiceId], references: [id])
+}
