@@ -24,7 +24,7 @@ services:
     depends_on:
       - postgres
     command: >
-      bash -c 'pnpm dev'
+      bash -c 'pnpm prisma generate && pnpm dev'
   prisma-studio:
     build:
       context: .
@@ -35,6 +35,7 @@ services:
     command: "pnpm prisma studio"
     depends_on:
       - postgres
+      - app
 
 volumes:
   postgres:
