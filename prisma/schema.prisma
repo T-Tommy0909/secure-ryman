@@ -8,6 +8,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator zod {
+  provider         = "pnpm dlx zod-prisma-types"
+  createInputTypes = false
+  output           = "../src/zod-types"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -20,23 +26,23 @@ enum UserType {
 }
 
 model User {
-  id     String   @id
-  role   UserType 
-  Answer Answer[]
+  id      String   @id
+  role    UserType
+  answers Answer[]
 }
 
 model Part {
-  id       BigInt     @id @default(autoincrement())
-  name     String     @unique
-  Question Question[]
+  id        BigInt     @id @default(autoincrement())
+  name      String     @unique
+  questions Question[]
 }
 
 model Question {
-  id           BigInt         @id @default(autoincrement())
-  partId       BigInt
-  text         String
-  part         Part           @relation(fields: [partId], references: [id])
-  AnswerChoice AnswerChoice[]
+  id            BigInt         @id @default(autoincrement())
+  partId        BigInt
+  text          String
+  part          Part           @relation(fields: [partId], references: [id])
+  answerChoices AnswerChoice[]
 }
 
 model AnswerChoice {
@@ -44,7 +50,7 @@ model AnswerChoice {
   questionId BigInt
   text       String
   question   Question @relation(fields: [questionId], references: [id])
-  Answer     Answer[]
+  answers    Answer[]
 }
 
 model Answer {

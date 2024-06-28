@@ -1,0 +1,104 @@
+import { z } from "zod";
+
+/////////////////////////////////////////
+// HELPER FUNCTIONS
+/////////////////////////////////////////
+
+/////////////////////////////////////////
+// ENUMS
+/////////////////////////////////////////
+
+export const TransactionIsolationLevelSchema = z.enum([
+  "ReadUncommitted",
+  "ReadCommitted",
+  "RepeatableRead",
+  "Serializable",
+]);
+
+export const UserScalarFieldEnumSchema = z.enum(["id", "role"]);
+
+export const PartScalarFieldEnumSchema = z.enum(["id", "name"]);
+
+export const QuestionScalarFieldEnumSchema = z.enum(["id", "partId", "text"]);
+
+export const AnswerChoiceScalarFieldEnumSchema = z.enum([
+  "id",
+  "questionId",
+  "text",
+]);
+
+export const AnswerScalarFieldEnumSchema = z.enum([
+  "id",
+  "userId",
+  "answerChoiceId",
+]);
+
+export const SortOrderSchema = z.enum(["asc", "desc"]);
+
+export const QueryModeSchema = z.enum(["default", "insensitive"]);
+
+export const UserTypeSchema = z.enum(["MANAGER", "SECURYTY", "ORDINARY"]);
+
+export type UserTypeType = `${z.infer<typeof UserTypeSchema>}`;
+
+/////////////////////////////////////////
+// MODELS
+/////////////////////////////////////////
+
+/////////////////////////////////////////
+// USER SCHEMA
+/////////////////////////////////////////
+
+export const UserSchema = z.object({
+  role: UserTypeSchema,
+  id: z.string(),
+});
+
+export type User = z.infer<typeof UserSchema>;
+
+/////////////////////////////////////////
+// PART SCHEMA
+/////////////////////////////////////////
+
+export const PartSchema = z.object({
+  id: z.bigint(),
+  name: z.string(),
+});
+
+export type Part = z.infer<typeof PartSchema>;
+
+/////////////////////////////////////////
+// QUESTION SCHEMA
+/////////////////////////////////////////
+
+export const QuestionSchema = z.object({
+  id: z.bigint(),
+  partId: z.bigint(),
+  text: z.string(),
+});
+
+export type Question = z.infer<typeof QuestionSchema>;
+
+/////////////////////////////////////////
+// ANSWER CHOICE SCHEMA
+/////////////////////////////////////////
+
+export const AnswerChoiceSchema = z.object({
+  id: z.bigint(),
+  questionId: z.bigint(),
+  text: z.string(),
+});
+
+export type AnswerChoice = z.infer<typeof AnswerChoiceSchema>;
+
+/////////////////////////////////////////
+// ANSWER SCHEMA
+/////////////////////////////////////////
+
+export const AnswerSchema = z.object({
+  id: z.bigint(),
+  userId: z.string(),
+  answerChoiceId: z.bigint(),
+});
+
+export type Answer = z.infer<typeof AnswerSchema>;
