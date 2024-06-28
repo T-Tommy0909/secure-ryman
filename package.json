@@ -15,7 +15,7 @@
   "lint-staged": {
     "./**/*.{ts,tsx}": [
       "pnpm format:fix",
-      "pnpm type-check",
+      "bash -c 'pnpm run type-check'",
       "eslint --max-warnings 0"
     ]
   },
