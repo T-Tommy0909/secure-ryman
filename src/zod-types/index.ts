@@ -19,12 +19,15 @@ export const UserScalarFieldEnumSchema = z.enum(["id", "role"]);
 
 export const PartScalarFieldEnumSchema = z.enum(["id", "name"]);
 
+export const CategoryScalarFieldEnumSchema = z.enum(["id", "partId", "name"]);
+
 export const QuestionScalarFieldEnumSchema = z.enum(["id", "partId", "text"]);
 
 export const AnswerChoiceScalarFieldEnumSchema = z.enum([
   "id",
   "questionId",
   "text",
+  "points",
 ]);
 
 export const AnswerScalarFieldEnumSchema = z.enum([
@@ -68,6 +71,18 @@ export const PartSchema = z.object({
 export type Part = z.infer<typeof PartSchema>;
 
 /////////////////////////////////////////
+// CATEGORY SCHEMA
+/////////////////////////////////////////
+
+export const CategorySchema = z.object({
+  id: z.bigint(),
+  partId: z.bigint(),
+  name: z.string(),
+});
+
+export type Category = z.infer<typeof CategorySchema>;
+
+/////////////////////////////////////////
 // QUESTION SCHEMA
 /////////////////////////////////////////
 
@@ -87,6 +102,7 @@ export const AnswerChoiceSchema = z.object({
   id: z.bigint(),
   questionId: z.bigint(),
   text: z.string(),
+  points: z.number().int(),
 });
 
 export type AnswerChoice = z.infer<typeof AnswerChoiceSchema>;
