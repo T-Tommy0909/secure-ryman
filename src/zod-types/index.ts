@@ -33,6 +33,7 @@ export const AnswerChoiceScalarFieldEnumSchema = z.enum([
 export const AnswerScalarFieldEnumSchema = z.enum([
   "id",
   "userId",
+  "categoryId",
   "answerChoiceId",
 ]);
 
@@ -114,6 +115,7 @@ export type AnswerChoice = z.infer<typeof AnswerChoiceSchema>;
 export const AnswerSchema = z.object({
   id: z.bigint(),
   userId: z.string(),
+  categoryId: z.bigint(),
   answerChoiceId: z.bigint(),
 });
 

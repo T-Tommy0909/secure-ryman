@@ -39,10 +39,11 @@ model Part {
 }
 
 model Category {
-  id     BigInt @id @default(autoincrement())
-  partId BigInt
-  name   String @unique
-  part   Part   @relation(fields: [partId], references: [id])
+  id      BigInt   @id @default(autoincrement())
+  partId  BigInt
+  name    String   @unique
+  part    Part     @relation(fields: [partId], references: [id])
+  answers Answer[]
 }
 
 model Question {
@@ -65,7 +66,9 @@ model AnswerChoice {
 model Answer {
   id             BigInt       @id @default(autoincrement())
   userId         String
+  categoryId     BigInt
   answerChoiceId BigInt
   user           User         @relation(fields: [userId], references: [id])
+  category       Category     @relation(fields: [categoryId], references: [id])
   answerChoice   AnswerChoice @relation(fields: [answerChoiceId], references: [id])
 }
