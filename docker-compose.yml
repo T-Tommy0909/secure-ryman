@@ -32,6 +32,8 @@ services:
       - DATABASE_URL=postgresql://tommy:aBiqp1K28l@postgres:5432/mydb?schema=public
     ports:
       - "5555:5555"
+    volumes:
+      - ./prisma:/app/prisma:delegated
     command: "pnpm prisma studio"
     depends_on:
       - postgres
