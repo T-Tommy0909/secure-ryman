@@ -9,7 +9,7 @@ generator client {
 }
 
 generator zod {
-  provider         = "pnpm dlx zod-prisma-types"
+  provider         = "npx zod-prisma-types"
   createInputTypes = false
   output           = "../src/zod-types"
 }
