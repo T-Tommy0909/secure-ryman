@@ -10,12 +10,12 @@
     "format": "prettier --check ./**/*.{ts,tsx}",
     "format:fix": "prettier --write ./**/*.{ts,tsx}",
     "type-check": "tsc --noEmit",
-    "prisma:migrate:dev": "dotenv -e .env.development -- pnpm prisma migrate dev"
+    "prisma:migrate:dev": "dotenv -e .env.development -- yarn prisma migrate dev"
   },
   "lint-staged": {
     "./**/*.{ts,tsx}": [
-      "pnpm format:fix",
-      "bash -c 'pnpm run type-check'",
+      "yarn format:fix",
+      "bash -c 'yarn run type-check'",
       "eslint --max-warnings 0"
     ]
   },
