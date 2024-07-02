@@ -3,6 +3,10 @@ import { prisma } from "@/server/utils/prisma";
 
 export const partRouter = router({
   list: procedure.query(async () => {
-    return await prisma.part.findMany();
+    return await prisma.part.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
   }),
 });
