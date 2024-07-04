@@ -39,18 +39,21 @@ model Part {
 }
 
 model Category {
-  id      BigInt   @id @default(autoincrement())
-  partId  BigInt
-  name    String   @unique
-  part    Part     @relation(fields: [partId], references: [id])
-  answers Answer[]
+  id        BigInt     @id @default(autoincrement())
+  partId    BigInt
+  name      String     @unique
+  part      Part       @relation(fields: [partId], references: [id])
+  questions Question[]
+  answers   Answer[]
 }
 
 model Question {
   id            BigInt         @id @default(autoincrement())
   partId        BigInt
+  categoryId    BigInt
   text          String
   part          Part           @relation(fields: [partId], references: [id])
+  category      Category       @relation(fields: [categoryId], references: [id])
   answerChoices AnswerChoice[]
 }
 
