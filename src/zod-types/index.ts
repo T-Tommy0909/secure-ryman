@@ -33,6 +33,7 @@ export const AnswerChoiceScalarFieldEnumSchema = z.enum([
   "questionId",
   "text",
   "points",
+  "type",
 ]);
 
 export const AnswerScalarFieldEnumSchema = z.enum([
@@ -49,6 +50,10 @@ export const QueryModeSchema = z.enum(["default", "insensitive"]);
 export const UserTypeSchema = z.enum(["MANAGER", "SECURYTY", "ORDINARY"]);
 
 export type UserTypeType = `${z.infer<typeof UserTypeSchema>}`;
+
+export const AnswerChoiceTypeSchema = z.enum(["RADIO", "CHECKBOX"]);
+
+export type AnswerChoiceTypeType = `${z.infer<typeof AnswerChoiceTypeSchema>}`;
 
 /////////////////////////////////////////
 // MODELS
@@ -106,6 +111,7 @@ export type Question = z.infer<typeof QuestionSchema>;
 /////////////////////////////////////////
 
 export const AnswerChoiceSchema = z.object({
+  type: AnswerChoiceTypeSchema,
   id: z.bigint(),
   questionId: z.bigint(),
   text: z.string(),
