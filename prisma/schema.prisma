@@ -25,6 +25,11 @@ enum UserType {
   ORDINARY
 }
 
+enum AnswerChoiceType {
+  RADIO
+  CHECKBOX
+}
+
 model User {
   id      String   @id
   role    UserType
@@ -58,11 +63,12 @@ model Question {
 }
 
 model AnswerChoice {
-  id         BigInt   @id @default(autoincrement())
+  id         BigInt           @id @default(autoincrement())
   questionId BigInt
   text       String
-  points     Int      @default(0)
-  question   Question @relation(fields: [questionId], references: [id])
+  points     Int              @default(0)
+  type       AnswerChoiceType @default(RADIO)
+  question   Question         @relation(fields: [questionId], references: [id])
   answers    Answer[]
 }
 
