@@ -26,6 +26,7 @@ export const QuestionScalarFieldEnumSchema = z.enum([
   "partId",
   "categoryId",
   "text",
+  "dependentQuestionId",
 ]);
 
 export const AnswerChoiceScalarFieldEnumSchema = z.enum([
@@ -46,6 +47,8 @@ export const AnswerScalarFieldEnumSchema = z.enum([
 export const SortOrderSchema = z.enum(["asc", "desc"]);
 
 export const QueryModeSchema = z.enum(["default", "insensitive"]);
+
+export const NullsOrderSchema = z.enum(["first", "last"]);
 
 export const UserTypeSchema = z.enum(["MANAGER", "SECURYTY", "ORDINARY"]);
 
@@ -102,6 +105,7 @@ export const QuestionSchema = z.object({
   partId: z.bigint(),
   categoryId: z.bigint(),
   text: z.string(),
+  dependentQuestionId: z.bigint().nullable(),
 });
 
 export type Question = z.infer<typeof QuestionSchema>;

@@ -53,13 +53,14 @@ model Category {
 }
 
 model Question {
-  id            BigInt         @id @default(autoincrement())
-  partId        BigInt
-  categoryId    BigInt
-  text          String
-  part          Part           @relation(fields: [partId], references: [id])
-  category      Category       @relation(fields: [categoryId], references: [id])
-  answerChoices AnswerChoice[]
+  id                  BigInt         @id @default(autoincrement())
+  partId              BigInt
+  categoryId          BigInt
+  text                String
+  dependentQuestionId BigInt?
+  part                Part           @relation(fields: [partId], references: [id])
+  category            Category       @relation(fields: [categoryId], references: [id])
+  answerChoices       AnswerChoice[]
 }
 
 model AnswerChoice {
