@@ -27,6 +27,7 @@
     "@trpc/react-query": "11.0.0-rc.390",
     "@trpc/server": "11.0.0-rc.390",
     "dotenv-cli": "^7.4.2",
+    "framer-motion": "^11.2.13",
     "next": "14.2.3",
     "prisma": "^5.14.0",
     "react": "^18",
