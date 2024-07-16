@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import React from "react";
 import { AssessmentField } from "../_components/assessment/AssessmentField";
+import { AuthContainer } from "../_components/common/AuthContainer";
 import { serverApi } from "../_trpc/server-api";
 
 interface Question {
@@ -67,9 +68,11 @@ const Assessment: NextPage = async () => {
   });
 
   return (
-    <AssessmentField
-      partsWithCategoriesAndQuestions={partsWithCategoriesAndQuestions}
-    />
+    <AuthContainer>
+      <AssessmentField
+        partsWithCategoriesAndQuestions={partsWithCategoriesAndQuestions}
+      />
+    </AuthContainer>
   );
 };
 
