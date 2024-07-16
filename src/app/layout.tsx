@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Inter } from "next/font/google";
 import Header from "./_components/common/Header";
 import Provider from "./_trpc/provider";
@@ -17,11 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
-      <body className={`${inter.className} bg-gray-100`}>
-        <Header />
-        <Provider>{children}</Provider>
-      </body>
-    </html>
+    <UserProvider>
+      <html lang="ja">
+        <body className={`${inter.className} bg-gray-100`}>
+          <Header />
+          <Provider>{children}</Provider>
+        </body>
+      </html>
+    </UserProvider>
   );
 }
