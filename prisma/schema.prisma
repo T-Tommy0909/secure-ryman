@@ -32,6 +32,7 @@ enum AnswerChoiceType {
 
 model User {
   id      String   @id
+  email   String   @unique
   role    UserType
   answers Answer[]
 }
