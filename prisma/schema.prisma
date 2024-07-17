@@ -25,6 +25,12 @@ enum UserType {
   ORDINARY
 }
 
+enum TargetType {
+  ALL
+  MANAGER
+  ORDINARY
+}
+
 enum AnswerChoiceType {
   RADIO
   CHECKBOX
@@ -59,6 +65,7 @@ model Question {
   categoryId          BigInt
   text                String
   dependentQuestionId BigInt?
+  target              TargetType     @default(ALL)
   part                Part           @relation(fields: [partId], references: [id])
   category            Category       @relation(fields: [categoryId], references: [id])
   answerChoices       AnswerChoice[]
