@@ -9,6 +9,7 @@ interface Question {
   partId: string;
   categoryId: string;
   text: string;
+  target: "MANAGER" | "ORDINARY" | "ALL";
   dependentQuestionId: string | null;
   answerChoices: AnswerChoice[];
   dependentQuestions?: Question[];

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { clientApi } from "@/app/_trpc/client-api";
 import { CreateAnswersRequestPayload } from "@/types/answer";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface AnswerChoice {
@@ -18,6 +19,7 @@ interface Question {
   partId: string;
   categoryId: string;
   text: string;
+  target: "MANAGER" | "ORDINARY" | "ALL";
   answerChoices: AnswerChoice[];
   dependentQuestions?: Question[];
 }
@@ -35,6 +37,28 @@ interface Props {
 export const AssessmentField: FC<Props> = ({
   partsWithCategoriesAndQuestions,
 }) => {
+  const { user } = useUser();
+  if (!user || !user.sub) {
+    throw new Error("User id not found");
+  }
+
+  const { data: userType } = clientApi.users.fetchUserType.useQuery({
+    id: user.sub,
+  });
+  const target =
+    userType === "MANAGER" || userType === "SECURITY" ? "MANAGER" : "ORDINARY";
+
+  const myParts = useMemo(
+    () =>
+      partsWithCategoriesAndQuestions.map((part) => ({
+        ...part,
+        questions: part.questions.filter(
+          (question) => question.target === target || question.target === "ALL",
+        ),
+      })),
+    [partsWithCategoriesAndQuestions, target],
+  );
+
   const mutation = clientApi.answers.createMany.useMutation();
   const createAnswers = (input: CreateAnswersRequestPayload) => {
     mutation.mutate(input);
@@ -50,12 +74,16 @@ export const AssessmentField: FC<Props> = ({
   >([]);
 
   const [visibleQuestions, setVisibleQuestions] = useState<Set<string>>(
-    new Set(
-      partsWithCategoriesAndQuestions.flatMap((part) =>
-        part.questions.map((q) => q.id),
-      ),
-    ),
+    new Set(),
   );
+
+  useEffect(() => {
+    if (myParts.length > 0) {
+      setVisibleQuestions(
+        new Set(myParts.flatMap((part) => part.questions.map((q) => q.id))),
+      );
+    }
+  }, [myParts]);
 
   const handleAnswerChange = (
     categoryId: string,
@@ -65,25 +93,19 @@ export const AssessmentField: FC<Props> = ({
     question: Question,
   ) => {
     setAnswers((prevAnswers) => {
-      let updatedAnswers: {
-        userId: string;
-        categoryId: string;
-        questionId: string;
-        answerChoiceId: string;
-      }[];
+      let updatedAnswers = [...prevAnswers];
 
       if (type === "RADIO") {
-        updatedAnswers = prevAnswers.filter(
+        updatedAnswers = updatedAnswers.filter(
           (answer) => answer.questionId !== questionId,
         );
         updatedAnswers.push({
-          userId: "1",
-          categoryId: categoryId,
-          questionId: questionId,
-          answerChoiceId: answerChoiceId,
+          userId: user.sub!,
+          categoryId,
+          questionId,
+          answerChoiceId,
         });
 
-        // Handle visibility of dependent questions
         setVisibleQuestions((prev) => {
           const newSet = new Set(prev);
           const selectedChoice = question.answerChoices.find(
@@ -98,7 +120,6 @@ export const AssessmentField: FC<Props> = ({
           } else if (question.dependentQuestions) {
             question.dependentQuestions.forEach((q) => {
               newSet.delete(q.id);
-              // Also remove answers for hidden questions
               updatedAnswers = updatedAnswers.filter(
                 (answer) => answer.questionId !== q.id,
               );
@@ -107,29 +128,20 @@ export const AssessmentField: FC<Props> = ({
           return newSet;
         });
       } else {
-        const existingAnswer = prevAnswers.find(
+        const existingAnswerIndex = updatedAnswers.findIndex(
           (answer) =>
             answer.questionId === questionId &&
             answer.answerChoiceId === answerChoiceId,
         );
-        if (existingAnswer) {
-          updatedAnswers = prevAnswers.filter(
-            (answer) =>
-              !(
-                answer.questionId === questionId &&
-                answer.answerChoiceId === answerChoiceId
-              ),
-          );
+        if (existingAnswerIndex !== -1) {
+          updatedAnswers.splice(existingAnswerIndex, 1);
         } else {
-          updatedAnswers = [
-            ...prevAnswers,
-            {
-              userId: "1",
-              categoryId: categoryId,
-              questionId: questionId,
-              answerChoiceId: answerChoiceId,
-            },
-          ];
+          updatedAnswers.push({
+            userId: user.sub!,
+            categoryId,
+            questionId,
+            answerChoiceId,
+          });
         }
       }
       return updatedAnswers;
@@ -239,7 +251,7 @@ export const AssessmentField: FC<Props> = ({
           診断内容を読み、解答欄から該当するものを選択してください。
         </p>
       </div>
-      {partsWithCategoriesAndQuestions.map((part) => (
+      {myParts.map((part) => (
         <div key={part.id} className="p-6">
           <div className="bg-blue-50 p-3 mb-6 font-semibold text-blue-800 rounded-md">
             {part.name}
