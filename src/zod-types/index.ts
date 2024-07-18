@@ -15,7 +15,7 @@ export const TransactionIsolationLevelSchema = z.enum([
   "Serializable",
 ]);
 
-export const UserScalarFieldEnumSchema = z.enum(["id", "role"]);
+export const UserScalarFieldEnumSchema = z.enum(["id", "email", "role"]);
 
 export const PartScalarFieldEnumSchema = z.enum(["id", "name"]);
 
@@ -27,6 +27,7 @@ export const QuestionScalarFieldEnumSchema = z.enum([
   "categoryId",
   "text",
   "dependentQuestionId",
+  "target",
 ]);
 
 export const AnswerChoiceScalarFieldEnumSchema = z.enum([
@@ -50,9 +51,13 @@ export const QueryModeSchema = z.enum(["default", "insensitive"]);
 
 export const NullsOrderSchema = z.enum(["first", "last"]);
 
-export const UserTypeSchema = z.enum(["MANAGER", "SECURYTY", "ORDINARY"]);
+export const UserTypeSchema = z.enum(["MANAGER", "SECURITY", "ORDINARY"]);
 
 export type UserTypeType = `${z.infer<typeof UserTypeSchema>}`;
+
+export const TargetTypeSchema = z.enum(["ALL", "MANAGER", "ORDINARY"]);
+
+export type TargetTypeType = `${z.infer<typeof TargetTypeSchema>}`;
 
 export const AnswerChoiceTypeSchema = z.enum(["RADIO", "CHECKBOX"]);
 
@@ -69,6 +74,7 @@ export type AnswerChoiceTypeType = `${z.infer<typeof AnswerChoiceTypeSchema>}`;
 export const UserSchema = z.object({
   role: UserTypeSchema,
   id: z.string(),
+  email: z.string(),
 });
 
 export type User = z.infer<typeof UserSchema>;
@@ -101,6 +107,7 @@ export type Category = z.infer<typeof CategorySchema>;
 /////////////////////////////////////////
 
 export const QuestionSchema = z.object({
+  target: TargetTypeSchema,
   id: z.bigint(),
   partId: z.bigint(),
   categoryId: z.bigint(),
