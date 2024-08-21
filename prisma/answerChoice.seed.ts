@@ -6,7 +6,7 @@ export const createAnswerChoiceSeed = async () => {
       {
         questionId: 1,
         text: "個人所有 or 社内 すべてのパソコン，スマホのOSやソフトウェアなどが最新の状態である",
-        points: 4,
+        points: 4.5,
         type: "RADIO",
       },
       {
