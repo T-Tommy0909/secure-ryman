@@ -70,4 +70,15 @@ export const answerRouter = router({
         }),
       });
     }),
+
+  checkAnswerExistence: procedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input }) => {
+      const answer = await prisma.answer.findFirst({
+        where: {
+          userId: input.userId,
+        },
+      });
+      return answer !== null;
+    }),
 });
