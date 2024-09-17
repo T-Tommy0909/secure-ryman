@@ -1,95 +1,130 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { NextPage } from "next";
+import { getSession } from "@auth0/nextjs-auth0";
+import { ClipboardList, BookOpen, LogIn, Search } from "lucide-react";
+import Link from "next/link";
+import { Button } from "./_components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "./_components/ui/card";
+import { serverApi } from "./_trpc/server-api";
 
-export default function Home() {
+const HomePage: NextPage = async () => {
+  const sesstion = await getSession();
+  const isMyAnswer = sesstion
+    ? await serverApi.answers.checkAnswerExistence({
+        userId: sesstion.user.sub,
+      })
+    : null;
+  const myAnswer =
+    sesstion && isMyAnswer
+      ? await serverApi.answers.myAnswerList({
+          userId: sesstion.user.sub,
+        })
+      : null;
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-gray-800 text-3xl font-bold mb-8">
+        Secure Rymanへようこそ
+      </h1>
+
+      {!sesstion ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>ログインしてセキュリティ診断を始めましょう</CardTitle>
+          </CardHeader>
+          <CardFooter>
+            <Link href="/api/auth/login">
+              <Button variant="custom">
+                <LogIn className="mr-2 h-4 w-4" />
+                ログイン
+              </Button>
+            </Link>
+          </CardFooter>
+        </Card>
+      ) : !myAnswer ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>セキュリティ診断を開始</CardTitle>
+            <CardDescription>
+              あなたのセキュリティ知識をチェックしましょう。診断は一度のみ実施可能です。
+            </CardDescription>
+          </CardHeader>
+          <CardFooter>
+            <Link href="/assessment">
+              <Button variant="custom">
+                <ClipboardList className="mr-2 h-4 w-4" />
+                診断を開始
+              </Button>
+            </Link>
+          </CardFooter>
+        </Card>
+      ) : (
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>診断結果</CardTitle>
+              <CardDescription>
+                あなたの診断結果は以下の通りです。
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {myAnswer.map((answer) => {
+                const highScoreCategories = answer.category.filter(
+                  (cat) => cat.points >= 2,
+                ).length;
+                return (
+                  <div key={answer.partName}>
+                    <p>
+                      {answer.partName} : {highScoreCategories} /{" "}
+                      {answer.category.length} 点
+                    </p>
+                  </div>
+                );
+              })}
+            </CardContent>
+            <CardFooter>
+              <Link href="/assessment-result">
+                <Button variant="custom">
+                  <Search strokeWidth={3} className="mr-2 h-4 w-4" />
+                  詳細を見る
+                </Button>
+              </Link>
+            </CardFooter>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>おすすめの教育コンテンツ</CardTitle>
+              <CardDescription>
+                あなたの診断結果に合わせたコンテンツをご用意しました。
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="list-disc list-inside">
+                <li>中級者向けセキュリティ対策講座</li>
+                <li>最新のサイバー攻撃トレンド</li>
+                <li>セキュリティポリシーの作成と実施</li>
+              </ul>
+            </CardContent>
+            <CardFooter>
+              <Link href="#">
+                <Button variant="custom">
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  E-learningを開始
+                </Button>
+              </Link>
+            </CardFooter>
+          </Card>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      )}
+    </div>
   );
-}
+};
+
+export default HomePage;
