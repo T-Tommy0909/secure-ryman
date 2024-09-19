@@ -1,6 +1,14 @@
 version: "3.8"
 
 services:
+  nginx:
+    image: nginx:1.24.0-bullseye
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
   postgres:
     image: postgres:14.0
     environment:
@@ -8,36 +16,37 @@ services:
       - POSTGRES_PASSWORD=aBiqp1K28l
     volumes:
       - postgres:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
+    expose:
+      - 5432
   app:
     build:
       context: .
+      target: production
     image: secure-ryman-app:latest
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
+    expose:
+      - 3000
     volumes:
       - .:/app:consistent
       - app-node_modules:/app/node_modules
-    environment:
-      - WATCHPACK_POLLING=true
     depends_on:
       - postgres
-    command: >
-      bash -c 'yarn prisma generate && yarn dev'
-  prisma-studio:
-    build:
-      context: .
-    environment:
-      - DATABASE_URL=postgresql://tommy:aBiqp1K28l@postgres:5432/mydb?schema=public
-    ports:
-      - "5555:5555"
-    volumes:
-      - ./prisma:/app/prisma:delegated
-    command: "yarn -s run prisma studio"
-    depends_on:
-      - postgres
-      - app
+  # prisma-studio:
+  #   build:
+  #     context: .
+  #   environment:
+  #     - DATABASE_URL=postgresql://tommy:aBiqp1K28l@postgres:5432/mydb?schema=public
+  #   ports:
+  #     - "5555:5555"
+  #   volumes:
+  #     - ./prisma:/app/prisma:delegated
+  #   command: "yarn -s run prisma studio"
+  #   depends_on:
+  #     - postgres
+  #     - app
 
 volumes:
   postgres:

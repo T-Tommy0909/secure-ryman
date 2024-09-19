@@ -1,5 +1,5 @@
-FROM node:20.14.0-bullseye-slim AS base
-RUN apt-get update
+FROM node:20.14.0-bullseye-slim AS dev
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./
@@ -7,4 +7,15 @@ COPY package.json yarn.lock ./
 RUN yarn install
 
 COPY . .
+
 RUN yarn prisma generate
+
+FROM node:20.14.0-bullseye-slim AS production
+
+WORKDIR /app
+
+COPY --from=dev /app/node_modules ./node_modules
+
+COPY . .
+
+CMD ["yarn", "start"] 
