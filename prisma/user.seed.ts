@@ -18,6 +18,16 @@ export const createUserSeed = async () => {
         role: "MANAGER",
         email: "seedadmin1@example.com",
       },
+      {
+        id: "auth0|66ed6310c1dbd1631d7a764e",
+        role: "ORDINARY",
+        email: "soichi1@example.com",
+      },
+      {
+        id: "auth0|66ed62eec1dbd1631d7a763c",
+        role: "ORDINARY",
+        email: "yagi1@example.com",
+      },
     ],
     skipDuplicates: true,
   });
