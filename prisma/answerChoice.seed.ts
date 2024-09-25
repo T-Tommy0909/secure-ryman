@@ -137,13 +137,13 @@ export const createAnswerChoiceSeed = async () => {
       },
       {
         questionId: 7,
-        text: "添付ファイル，もしくはＵＲＬリンクのどちらか一方には気をつけている",
+        text: "添付ファイル，もしくはURLリンクのどちらか一方には気をつけている",
         points: 2,
         type: "RADIO",
       },
       {
         questionId: 7,
-        text: "電子メールやＵＲＬリンクに潜むリスクを容認した上で気をつけていない",
+        text: "電子メールやURLリンクに潜むリスクを容認した上で気をつけていない",
         points: 0,
         type: "RADIO",
       },
