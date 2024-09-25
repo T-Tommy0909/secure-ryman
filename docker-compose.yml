@@ -16,8 +16,6 @@ services:
       - POSTGRES_PASSWORD=aBiqp1K28l
     volumes:
       - postgres:/var/lib/postgresql/data
-    # ports:
-    #   - "5432:5432"
     expose:
       - 5432
   app:
@@ -25,8 +23,6 @@ services:
       context: .
       target: production
     image: secure-ryman-app:latest
-    # ports:
-    #   - "3000:3000"
     expose:
       - 3000
     volumes:
@@ -34,19 +30,6 @@ services:
       - app-node_modules:/app/node_modules
     depends_on:
       - postgres
-  # prisma-studio:
-  #   build:
-  #     context: .
-  #   environment:
-  #     - DATABASE_URL=postgresql://tommy:aBiqp1K28l@postgres:5432/mydb?schema=public
-  #   ports:
-  #     - "5555:5555"
-  #   volumes:
-  #     - ./prisma:/app/prisma:delegated
-  #   command: "yarn -s run prisma studio"
-  #   depends_on:
-  #     - postgres
-  #     - app
 
 volumes:
   postgres:
