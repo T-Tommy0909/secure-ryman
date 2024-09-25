@@ -5,6 +5,7 @@ import { clientApi } from "@/app/_trpc/client-api";
 import { CreateAnswersRequestPayload } from "@/types/answer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface AnswerChoice {
   id: string;
@@ -262,22 +263,24 @@ export const AssessmentField: FC<Props> = ({
         </div>
       ))}
       <div className="bg-gray-100 p-4 border-t border-gray-200 flex justify-end">
-        <button
-          className="bg-blue-600 text-white py-2 px-4 text-sm rounded cursor-pointer hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={() => {
-            const filteredAnswers = answers
-              .filter((answer) => visibleQuestions.has(answer.questionId))
-              .map((answer) => ({
-                answerChoiceId: answer.answerChoiceId,
-                categoryId: answer.categoryId,
-                userId: answer.userId,
-              }));
-            createAnswers(filteredAnswers);
-          }}
-          disabled={!isAllQuestionsAnswered}
-        >
-          送信
-        </button>
+        <Link href="/assessment-result">
+          <button
+            className="bg-blue-600 text-white py-2 px-4 text-sm rounded cursor-pointer hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={() => {
+              const filteredAnswers = answers
+                .filter((answer) => visibleQuestions.has(answer.questionId))
+                .map((answer) => ({
+                  answerChoiceId: answer.answerChoiceId,
+                  categoryId: answer.categoryId,
+                  userId: answer.userId,
+                }));
+              createAnswers(filteredAnswers);
+            }}
+            disabled={!isAllQuestionsAnswered}
+          >
+            送信
+          </button>
+        </Link>
       </div>
     </div>
   );
