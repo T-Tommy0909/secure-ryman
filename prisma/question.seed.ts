@@ -24,7 +24,7 @@ export const createQuestionSeed = async () => {
       {
         partId: 1,
         categoryId: 4,
-        text: "重要情報を保管している電子媒体のパスワードはどのように設定していますか",
+        text: "重要情報を保管している電子媒体のパスワードはどのように設定していますか ※複数選択可",
         dependentQuestionId: 3,
         target: "ALL",
       },
