@@ -2,7 +2,7 @@ import { FC } from "react";
 import { BookOpen } from "lucide-react";
 import Link from "next/link";
 
-interface Course {
+interface Lesson {
   id: string;
   title: string;
   description: string;
@@ -10,7 +10,7 @@ interface Course {
   isRecommended: boolean;
 }
 
-const courses: Course[] = [
+const lessons: Lesson[] = [
   {
     id: "1",
     title: "メールによる攻撃の対策",
@@ -48,11 +48,11 @@ const courses: Course[] = [
   },
 ];
 
-const CourseList: FC = () => {
+const LessonList: FC = () => {
   return (
     <div className="space-y-4">
-      {courses.map((course) => (
-        <Link href={`/e-learning/${course.id}`} key={course.id}>
+      {lessons.map((lesson) => (
+        <Link href={`/e-learning/${lesson.id}`} key={lesson.id}>
           <div className="block bg-white border rounded-lg p-4 relative cursor-pointer">
             <div className="flex items-start">
               <div className="flex-shrink-0 mr-4">
@@ -61,10 +61,10 @@ const CourseList: FC = () => {
                 </div>
               </div>
               <div className="flex-grow">
-                <h2 className="text-lg font-semibold mb-2">{course.title}</h2>
-                <p className="text-gray-600 mb-2">{course.description}</p>
+                <h2 className="text-lg font-semibold mb-2">{lesson.title}</h2>
+                <p className="text-gray-600 mb-2">{lesson.description}</p>
                 <div className="flex flex-wrap gap-2">
-                  {course.tags.map((tag) => (
+                  {lesson.tags.map((tag) => (
                     <span
                       key={tag}
                       className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded"
@@ -75,7 +75,7 @@ const CourseList: FC = () => {
                 </div>
               </div>
             </div>
-            {course.isRecommended && (
+            {lesson.isRecommended && (
               <div className="absolute bottom-0 right-0 bg-blue-500 text-white px-2 py-1 text-xs rounded-tl-lg rounded-br-lg">
                 推奨コンテンツ
               </div>
@@ -87,4 +87,4 @@ const CourseList: FC = () => {
   );
 };
 
-export default CourseList;
+export default LessonList;
