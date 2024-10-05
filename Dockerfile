@@ -1,4 +1,4 @@
-FROM node:20.14.0-bullseye-slim AS dev
+FROM node:22.9.0-bullseye-slim AS dev
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 
 RUN yarn prisma generate
 
-FROM node:20.14.0-bullseye-slim AS production
+FROM node:22.9.0-bullseye-slim AS production
 
 WORKDIR /app
 
