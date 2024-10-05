@@ -45,6 +45,15 @@ export const AnswerScalarFieldEnumSchema = z.enum([
   "answerChoiceId",
 ]);
 
+export const LessonScalarFieldEnumSchema = z.enum([
+  "id",
+  "title",
+  "description",
+  "fileName",
+]);
+
+export const LessonTagScalarFieldEnumSchema = z.enum(["id", "name"]);
+
 export const SortOrderSchema = z.enum(["asc", "desc"]);
 
 export const QueryModeSchema = z.enum(["default", "insensitive"]);
@@ -143,3 +152,27 @@ export const AnswerSchema = z.object({
 });
 
 export type Answer = z.infer<typeof AnswerSchema>;
+
+/////////////////////////////////////////
+// LESSON SCHEMA
+/////////////////////////////////////////
+
+export const LessonSchema = z.object({
+  id: z.bigint(),
+  title: z.string(),
+  description: z.string(),
+  fileName: z.string(),
+});
+
+export type Lesson = z.infer<typeof LessonSchema>;
+
+/////////////////////////////////////////
+// LESSON TAG SCHEMA
+/////////////////////////////////////////
+
+export const LessonTagSchema = z.object({
+  id: z.bigint(),
+  name: z.string(),
+});
+
+export type LessonTag = z.infer<typeof LessonTagSchema>;

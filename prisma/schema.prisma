@@ -37,10 +37,11 @@ enum AnswerChoiceType {
 }
 
 model User {
-  id      String   @id
-  email   String   @unique
-  role    UserType
-  answers Answer[]
+  id                 String   @id
+  email              String   @unique
+  role               UserType
+  answers            Answer[]
+  recommendedLessons Lesson[]
 }
 
 model Part {
@@ -89,4 +90,19 @@ model Answer {
   user           User         @relation(fields: [userId], references: [id])
   category       Category     @relation(fields: [categoryId], references: [id])
   answerChoice   AnswerChoice @relation(fields: [answerChoiceId], references: [id])
+}
+
+model Lesson {
+  id          BigInt      @id @default(autoincrement())
+  title       String
+  description String
+  fileName    String
+  users       User[]
+  tags        LessonTag[]
+}
+
+model LessonTag {
+  id      BigInt   @id @default(autoincrement())
+  name    String
+  Lessons Lesson[]
 }
