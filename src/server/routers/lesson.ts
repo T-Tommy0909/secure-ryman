@@ -21,4 +21,17 @@ export const lessonRouter = router({
 
       return response;
     }),
+  get: procedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      const lesson = await prisma.lesson.findUnique({
+        where: { id: BigInt(input.id) },
+        select: { title: true, fileName: true },
+      });
+      if (!lesson) {
+        throw new Error("Lesson not found");
+      }
+
+      return lesson;
+    }),
 });
