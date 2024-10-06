@@ -6,7 +6,7 @@ import LessonList from "../_components/e-learning/LessonList";
 const Elearning: NextPage = async () => {
   const session = await getSession();
   if (!session || !session.user.sub) {
-    redirect("/");
+    redirect("/api/auth/login");
   }
 
   return (
