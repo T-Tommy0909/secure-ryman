@@ -39,9 +39,11 @@ enum AnswerChoiceType {
 model User {
   id                 String   @id
   email              String   @unique
+  companyId          BigInt?
   role               UserType
   answers            Answer[]
   recommendedLessons Lesson[]
+  company            Company? @relation(fields: [companyId], references: [id])
 }
 
 model Part {
@@ -105,4 +107,37 @@ model LessonTag {
   id      BigInt   @id @default(autoincrement())
   name    String
   Lessons Lesson[]
+}
+
+model Company {
+  id         BigInt    @id @default(autoincrement())
+  employee   Int?
+  budget     Int?
+  industryId BigInt?
+  users      User[]
+  products   Product[]
+  Industry   Industry? @relation(fields: [industryId], references: [id])
+}
+
+model Product {
+  id          BigInt            @id @default(autoincrement())
+  name        String
+  description String?
+  price       String?
+  usagePeriod String?
+  companyId   BigInt
+  Company     Company           @relation(fields: [companyId], references: [id])
+  categories  ProductCategory[]
+}
+
+model Industry {
+  id        BigInt    @id @default(autoincrement())
+  name      String
+  companies Company[]
+}
+
+model ProductCategory {
+  id       BigInt    @id @default(autoincrement())
+  name     String
+  products Product[]
 }

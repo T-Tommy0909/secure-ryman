@@ -15,7 +15,12 @@ export const TransactionIsolationLevelSchema = z.enum([
   "Serializable",
 ]);
 
-export const UserScalarFieldEnumSchema = z.enum(["id", "email", "role"]);
+export const UserScalarFieldEnumSchema = z.enum([
+  "id",
+  "email",
+  "companyId",
+  "role",
+]);
 
 export const PartScalarFieldEnumSchema = z.enum(["id", "name"]);
 
@@ -54,6 +59,26 @@ export const LessonScalarFieldEnumSchema = z.enum([
 
 export const LessonTagScalarFieldEnumSchema = z.enum(["id", "name"]);
 
+export const CompanyScalarFieldEnumSchema = z.enum([
+  "id",
+  "employee",
+  "budget",
+  "industryId",
+]);
+
+export const ProductScalarFieldEnumSchema = z.enum([
+  "id",
+  "name",
+  "description",
+  "price",
+  "usagePeriod",
+  "companyId",
+]);
+
+export const IndustryScalarFieldEnumSchema = z.enum(["id", "name"]);
+
+export const ProductCategoryScalarFieldEnumSchema = z.enum(["id", "name"]);
+
 export const SortOrderSchema = z.enum(["asc", "desc"]);
 
 export const QueryModeSchema = z.enum(["default", "insensitive"]);
@@ -84,6 +109,7 @@ export const UserSchema = z.object({
   role: UserTypeSchema,
   id: z.string(),
   email: z.string(),
+  companyId: z.bigint().nullable(),
 });
 
 export type User = z.infer<typeof UserSchema>;
@@ -176,3 +202,53 @@ export const LessonTagSchema = z.object({
 });
 
 export type LessonTag = z.infer<typeof LessonTagSchema>;
+
+/////////////////////////////////////////
+// COMPANY SCHEMA
+/////////////////////////////////////////
+
+export const CompanySchema = z.object({
+  id: z.bigint(),
+  employee: z.number().int().nullable(),
+  budget: z.number().int().nullable(),
+  industryId: z.bigint().nullable(),
+});
+
+export type Company = z.infer<typeof CompanySchema>;
+
+/////////////////////////////////////////
+// PRODUCT SCHEMA
+/////////////////////////////////////////
+
+export const ProductSchema = z.object({
+  id: z.bigint(),
+  name: z.string(),
+  description: z.string().nullable(),
+  price: z.string().nullable(),
+  usagePeriod: z.string().nullable(),
+  companyId: z.bigint(),
+});
+
+export type Product = z.infer<typeof ProductSchema>;
+
+/////////////////////////////////////////
+// INDUSTRY SCHEMA
+/////////////////////////////////////////
+
+export const IndustrySchema = z.object({
+  id: z.bigint(),
+  name: z.string(),
+});
+
+export type Industry = z.infer<typeof IndustrySchema>;
+
+/////////////////////////////////////////
+// PRODUCT CATEGORY SCHEMA
+/////////////////////////////////////////
+
+export const ProductCategorySchema = z.object({
+  id: z.bigint(),
+  name: z.string(),
+});
+
+export type ProductCategory = z.infer<typeof ProductCategorySchema>;
