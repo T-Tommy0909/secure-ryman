@@ -34,7 +34,7 @@ const ProductList: FC<Props> = ({ categories }) => {
         : [...prev, categoryName],
     );
   };
-  console.log(categories);
+
   return (
     <div>
       {categories.map((category) => (
