@@ -41,7 +41,7 @@ const ProductList: FC<Props> = ({ categories }) => {
         <div key={category.name} className="mb-4">
           <button
             onClick={() => toggleCategory(category.name)}
-            className="flex justify-between items-center w-full p-4 bg-gray-200 hover:bg-gray-300 transition-colors rounded-lg"
+            className="flex justify-between items-center w-full p-4 bg-blue-200 hover:bg-blue-300 transition-colors rounded-lg"
           >
             <span className="text-lg font-semibold">{category.name}</span>
             {openCategories.includes(category.name) ? (
