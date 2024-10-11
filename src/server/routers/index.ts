@@ -1,5 +1,6 @@
 import { router } from "../trpc";
 import { answerRouter } from "./answer";
+import { companyRouter } from "./company";
 import { lessonRouter } from "./lesson";
 import { partRouter } from "./part";
 import { productCategoryRouter } from "./productCategory";
@@ -13,6 +14,7 @@ export const appRouter = router({
   answers: answerRouter,
   lessons: lessonRouter,
   productCategorys: productCategoryRouter,
+  company: companyRouter,
 });
 
 export type AppRouter = typeof appRouter;
