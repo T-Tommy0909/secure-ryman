@@ -80,16 +80,15 @@ export const companyRouter = router({
 
       const companyPartScoreAverages = await Promise.all(
         parts.map(async (part) => {
+          // カテゴリ内の回答から、会社の回答を抽出し、その平均得点を計算
+          // flatMapでcategorysを一次元配列に変換
+          const partScores = part.categorys.flatMap((category) =>
+            category.answers
+              .filter((answer) => answer.user.companyId === companyData.id)
+              .map((answer) => answer.answerChoice.points),
+          );
           const partScoreAverage =
-            // カテゴリ内の回答から、会社の回答を抽出し、その平均得点を計算
-            // flatMapでcategorysを一次元配列に変換
-            part.categorys
-              .flatMap((category) =>
-                category.answers
-                  .filter((answer) => answer.user.companyId === companyData.id)
-                  .map((answer) => answer.answerChoice.points),
-              )
-              .reduce((acc, curr) => acc + curr, 0) / part.categorys.length;
+            partScores.reduce((acc, curr) => acc + curr, 0) / partScores.length;
           return partScoreAverage;
         }),
       );
