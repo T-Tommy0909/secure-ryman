@@ -1,6 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FC } from "react";
+import {
+  CompetitorIndustryResultList,
+  MyCompanyResult,
+  MyIndustryResult,
+} from "@/server/routers/company";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,31 +26,17 @@ ChartJS.register(
   Legend,
 );
 
-interface CompanyData {
-  name: string;
-  industry: string;
-  employeeCount: string | null;
-  averageScore: number;
-  annualBudget: string;
-  scores: number[];
+interface SecurityComparisonProps {
+  myCompanyResult: MyCompanyResult;
+  myIndustryResult: MyIndustryResult;
+  competitorIndustryResultList: CompetitorIndustryResultList;
 }
 
-export default function SecurityComparison() {
-  const [companyData, setCompanyData] = useState<CompanyData[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchSecurityData();
-        setCompanyData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+const SecurityComparison: FC<SecurityComparisonProps> = ({
+  myCompanyResult,
+  myIndustryResult,
+  competitorIndustryResultList,
+}) => {
   const options = {
     responsive: true,
     scales: {
@@ -69,26 +60,91 @@ export default function SecurityComparison() {
         同業他社の点数・セキュリティ予算
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {companyData.map((company, index) => (
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">貴社</h2>
+          <div className="mb-4">
+            <p>
+              <span className="font-medium">業界:</span>{" "}
+              {myCompanyResult.industry}
+            </p>
+            {myCompanyResult.employee && (
+              <p>
+                <span className="font-medium">社員数:</span> 約
+                {myCompanyResult.employee}人
+              </p>
+            )}
+            <p>
+              <span className="font-medium">平均点:</span>{" "}
+              {myCompanyResult.averageScore}
+            </p>
+            <p>
+              <span className="font-medium">年間予算:</span> 約
+              {myCompanyResult.budget}万円
+            </p>
+          </div>
+          <Bar
+            options={options}
+            data={{
+              labels,
+              datasets: [
+                {
+                  data: myCompanyResult.partScoreAverages,
+                  backgroundColor: "rgba(0, 99, 232, 0.6)",
+                },
+              ],
+            }}
+          />
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">業界平均</h2>
+          <div className="mb-4">
+            <p>
+              <span className="font-medium">業界:</span>{" "}
+              {myIndustryResult.industry}
+            </p>
+            <p>
+              <span className="font-medium">平均点:</span>{" "}
+              {myIndustryResult.averageScore}
+            </p>
+            <p>
+              <span className="font-medium">年間予算:</span> 約
+              {myIndustryResult.budget}万円
+            </p>
+          </div>
+          <Bar
+            options={options}
+            data={{
+              labels,
+              datasets: [
+                {
+                  data: myIndustryResult.partScoreAverages,
+                  backgroundColor: "rgba(128, 128, 128, 0.6)",
+                },
+              ],
+            }}
+          />
+        </div>
+        {competitorIndustryResultList.map((company, index) => (
           <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">{company.name}</h2>
+            <h2 className="text-xl font-semibold mb-4">同業他社-{index + 1}</h2>
             <div className="mb-4">
               <p>
                 <span className="font-medium">業界:</span> {company.industry}
               </p>
-              {company.employeeCount && (
+              {company.employee && (
                 <p>
-                  <span className="font-medium">社員数:</span>{" "}
-                  {company.employeeCount}
+                  <span className="font-medium">社員数:</span> 約
+                  {company.employee}人
                 </p>
               )}
               <p>
                 <span className="font-medium">平均点:</span>{" "}
-                {company.averageScore.toFixed(1)}
+                {company.averageScore}
               </p>
               <p>
-                <span className="font-medium">年間予算:</span>{" "}
-                {company.annualBudget}
+                <span className="font-medium">年間予算:</span> 約
+                {company.budget}万円
               </p>
             </div>
             <Bar
@@ -97,11 +153,8 @@ export default function SecurityComparison() {
                 labels,
                 datasets: [
                   {
-                    data: company.scores,
-                    backgroundColor:
-                      index === 0
-                        ? "rgba(0, 99, 232, 0.6)"
-                        : "rgba(128, 128, 128, 0.6)",
+                    data: company.partScoreAverages,
+                    backgroundColor: "rgba(128, 128, 128, 0.6)",
                   },
                 ],
               }}
@@ -111,41 +164,6 @@ export default function SecurityComparison() {
       </div>
     </div>
   );
-}
+};
 
-async function fetchSecurityData(): Promise<CompanyData[]> {
-  return [
-    {
-      name: "貴社",
-      industry: "製造業",
-      employeeCount: "約200人",
-      averageScore: 3.0,
-      annualBudget: "¥80,000",
-      scores: [3, 4, 2],
-    },
-    {
-      name: "業界平均",
-      industry: "製造業",
-      employeeCount: null,
-      averageScore: 2.0,
-      annualBudget: "¥100,000",
-      scores: [3, 1, 2],
-    },
-    {
-      name: "同業他社 1",
-      industry: "製造業",
-      employeeCount: "約500人",
-      averageScore: 2.2,
-      annualBudget: "¥120,000",
-      scores: [2.5, 2.5, 1.5],
-    },
-    {
-      name: "同業他社 2",
-      industry: "製造業",
-      employeeCount: "約1000人",
-      averageScore: 3.0,
-      annualBudget: "¥150,000",
-      scores: [4, 3, 2],
-    },
-  ];
-}
+export default SecurityComparison;
