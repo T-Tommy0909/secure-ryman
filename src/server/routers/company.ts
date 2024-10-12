@@ -1,6 +1,5 @@
 import { router, procedure } from "@/server/trpc";
 import { prisma } from "@/server/utils/prisma";
-import { Return } from "@prisma/client/runtime/library";
 import { z } from "zod";
 
 export const companyRouter = router({
@@ -59,9 +58,10 @@ export const companyRouter = router({
         }),
       );
 
-      const companyAnswerAverage =
+      const companyAnswerAverage = (
         userAnswers.flat().reduce((acc, curr) => acc + curr, 0) /
-        userAnswers.flat().length;
+        userAnswers.flat().length
+      ).toFixed(1);
 
       const parts = await prisma.part.findMany({
         include: {
@@ -90,7 +90,7 @@ export const companyRouter = router({
           );
           const partScoreAverage =
             partScores.reduce((acc, curr) => acc + curr, 0) / partScores.length;
-          return partScoreAverage;
+          return partScoreAverage.toFixed(1);
         }),
       );
 
@@ -168,9 +168,10 @@ export const companyRouter = router({
           return companyAnswerAverage;
         }),
       );
-      const averageScore =
+      const averageScore = (
         companyAnswerAverages.flat().reduce((acc, curr) => acc + curr, 0) /
-        companyAnswerAverages.flat().length;
+        companyAnswerAverages.flat().length
+      ).toFixed(1);
 
       const parts = await prisma.part.findMany({
         include: {
@@ -205,7 +206,7 @@ export const companyRouter = router({
           );
           const partScoreAverage =
             partScores.reduce((acc, curr) => acc + curr, 0) / partScores.length;
-          return partScoreAverage;
+          return partScoreAverage.toFixed(1);
         }),
       );
 
@@ -295,9 +296,10 @@ export const companyRouter = router({
             }),
           );
 
-          const companyAnswerAverage =
+          const companyAnswerAverage = (
             userAnswers.flat().reduce((acc, curr) => acc + curr, 0) /
-            userAnswers.flat().length;
+            userAnswers.flat().length
+          ).toFixed(1);
 
           const companyPartScoreAverages = await Promise.all(
             parts.map(async (part) => {
@@ -309,7 +311,7 @@ export const companyRouter = router({
               const partScoreAverage =
                 partScores.reduce((acc, curr) => acc + curr, 0) /
                 partScores.length;
-              return partScoreAverage;
+              return partScoreAverage.toFixed(1);
             }),
           );
 
