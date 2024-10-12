@@ -4,6 +4,7 @@ import { getSession } from "@auth0/nextjs-auth0";
 import { redirect } from "next/navigation";
 import ProductList from "../_components/product/ProductList";
 import { serverApi } from "../_trpc/server-api";
+import { checkManagerOrSecurity } from "../_utils/authCheck";
 
 const ProductPage: NextPage = async () => {
   const session = await getSession();
@@ -11,7 +12,7 @@ const ProductPage: NextPage = async () => {
     redirect("/api/auth/login");
   }
 
-  // todo: userロールがordinaryだったら、エラーページにリダイレクト
+  await checkManagerOrSecurity(session.user.sub);
 
   const productCategories = await serverApi.productCategorys.list({
     userId: session.user.sub,
