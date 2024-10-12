@@ -52,7 +52,7 @@ const SecurityComparison: FC<SecurityComparisonProps> = ({
     },
   };
 
-  const labels = ["基本", "従業員", "組織"];
+  const labels = ["基本的対策", "従業員としての対策", "組織としての対策"];
 
   return (
     <div className="w-full max-w-6xl mx-auto">
