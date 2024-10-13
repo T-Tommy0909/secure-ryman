@@ -10,6 +10,8 @@ import { createPartSeed } from "./part.seed";
 import { createProductSeed } from "./product.seed";
 import { createProductCategorySeed } from "./productCategory.seed";
 import { createQuestionSeed } from "./question.seed";
+import { createQuizSeed } from "./quiz.seed";
+import { createQuizAnswerSeed } from "./quizAnswer.seed";
 import { createUserSeed } from "./user.seed";
 
 const main = async () => {
@@ -24,6 +26,8 @@ const main = async () => {
   await createCompanySeed();
   await createProductCategorySeed();
   await createProductSeed();
+  await createQuizSeed();
+  await createQuizAnswerSeed();
 };
 
 main()
