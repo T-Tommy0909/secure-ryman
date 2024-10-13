@@ -6,6 +6,7 @@ import { partRouter } from "./part";
 import { productCategoryRouter } from "./productCategory";
 import { questionRouter } from "./question";
 import { quizRouter } from "./quiz";
+import { quizAnswerRouter } from "./quizAnswer";
 import { userRouter } from "./user";
 
 export const appRouter = router({
@@ -17,6 +18,7 @@ export const appRouter = router({
   productCategorys: productCategoryRouter,
   company: companyRouter,
   quizzes: quizRouter,
+  quizAnswers: quizAnswerRouter,
 });
 
 export type AppRouter = typeof appRouter;
