@@ -24,7 +24,7 @@ const LessonPage: NextPage<LessonPageProps> = async ({ params }) => {
             {lessonData.title}
           </h2>
           <Suspense fallback={<div>Loading...</div>}>
-            <LessonViewer pdfUrl={pdfUrl} />
+            <LessonViewer lessonNum={params.id} pdfUrl={pdfUrl} />
           </Suspense>
         </main>
       </div>
