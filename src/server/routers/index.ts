@@ -5,6 +5,7 @@ import { lessonRouter } from "./lesson";
 import { partRouter } from "./part";
 import { productCategoryRouter } from "./productCategory";
 import { questionRouter } from "./question";
+import { quizRouter } from "./quiz";
 import { userRouter } from "./user";
 
 export const appRouter = router({
@@ -15,6 +16,7 @@ export const appRouter = router({
   lessons: lessonRouter,
   productCategorys: productCategoryRouter,
   company: companyRouter,
+  quizzes: quizRouter,
 });
 
 export type AppRouter = typeof appRouter;
