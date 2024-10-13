@@ -79,6 +79,15 @@ export const IndustryScalarFieldEnumSchema = z.enum(["id", "name"]);
 
 export const ProductCategoryScalarFieldEnumSchema = z.enum(["id", "name"]);
 
+export const QuizScalarFieldEnumSchema = z.enum(["id", "text", "lessonId"]);
+
+export const QuizAnswerScalarFieldEnumSchema = z.enum([
+  "id",
+  "text",
+  "isCorrect",
+  "quizId",
+]);
+
 export const SortOrderSchema = z.enum(["asc", "desc"]);
 
 export const QueryModeSchema = z.enum(["default", "insensitive"]);
@@ -252,3 +261,28 @@ export const ProductCategorySchema = z.object({
 });
 
 export type ProductCategory = z.infer<typeof ProductCategorySchema>;
+
+/////////////////////////////////////////
+// QUIZ SCHEMA
+/////////////////////////////////////////
+
+export const QuizSchema = z.object({
+  id: z.bigint(),
+  text: z.string(),
+  lessonId: z.bigint(),
+});
+
+export type Quiz = z.infer<typeof QuizSchema>;
+
+/////////////////////////////////////////
+// QUIZ ANSWER SCHEMA
+/////////////////////////////////////////
+
+export const QuizAnswerSchema = z.object({
+  id: z.bigint(),
+  text: z.string(),
+  isCorrect: z.boolean(),
+  quizId: z.bigint(),
+});
+
+export type QuizAnswer = z.infer<typeof QuizAnswerSchema>;

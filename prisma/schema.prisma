@@ -37,13 +37,14 @@ enum AnswerChoiceType {
 }
 
 model User {
-  id                 String   @id
-  email              String   @unique
+  id                 String       @id
+  email              String       @unique
   companyId          BigInt?
   role               UserType
+  quizAnswers        QuizAnswer[]
   answers            Answer[]
   recommendedLessons Lesson[]
-  company            Company? @relation(fields: [companyId], references: [id])
+  company            Company?     @relation(fields: [companyId], references: [id])
 }
 
 model Part {
@@ -101,6 +102,7 @@ model Lesson {
   fileName    String
   users       User[]
   tags        LessonTag[]
+  quiz        Quiz[]
 }
 
 model LessonTag {
@@ -140,4 +142,21 @@ model ProductCategory {
   id       BigInt    @id @default(autoincrement())
   name     String
   products Product[]
+}
+
+model Quiz {
+  id         BigInt       @id @default(autoincrement())
+  text       String
+  lessonId   BigInt
+  lesson     Lesson       @relation(fields: [lessonId], references: [id])
+  quizAnswer QuizAnswer[]
+}
+
+model QuizAnswer {
+  id        BigInt  @id @default(autoincrement())
+  text      String
+  isCorrect Boolean
+  quizId    BigInt
+  quiz      Quiz    @relation(fields: [quizId], references: [id])
+  users     User[]
 }
