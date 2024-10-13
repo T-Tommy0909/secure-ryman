@@ -40,7 +40,7 @@ const HomePage: NextPage = async () => {
       : null;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 space-y-4">
       <div className="flex items-center mb-8">
         <h1 className="text-gray-800 text-3xl font-bold">
           Secure Rymanへようこそ
@@ -62,7 +62,7 @@ const HomePage: NextPage = async () => {
           </CardFooter>
         </Card>
       ) : !myAnswer ? (
-        <div className="space-y-6">
+        <div>
           <Card>
             <CardHeader>
               <CardTitle>セキュリティ診断を開始</CardTitle>
@@ -80,8 +80,8 @@ const HomePage: NextPage = async () => {
             </CardFooter>
           </Card>
         </div>
-      ) : userRole === "ORDINARY" ? (
-        <div className="space-y-6">
+      ) : (
+        <div className="space-y-4">
           <Card>
             <CardHeader>
               <CardTitle>診断結果</CardTitle>
@@ -138,63 +138,9 @@ const HomePage: NextPage = async () => {
             </CardFooter>
           </Card>
         </div>
-      ) : (
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>診断結果</CardTitle>
-              <CardDescription>
-                あなたの診断結果は以下の通りです。
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {myAnswer.map((answer) => {
-                const highScoreCategories = answer.category.filter(
-                  (cat) => cat.points >= 2,
-                ).length;
-                return (
-                  <div key={answer.partName}>
-                    <p>
-                      {answer.partName} : {highScoreCategories} /{" "}
-                      {answer.category.length} 点
-                    </p>
-                  </div>
-                );
-              })}
-            </CardContent>
-            <CardFooter>
-              <Link href="/assessment-result">
-                <Button variant="custom">
-                  <Search strokeWidth={3} className="mr-2 h-4 w-4" />
-                  詳細を見る
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>おすすめの教育コンテンツ</CardTitle>
-              <CardDescription>
-                あなたの診断結果に合わせたコンテンツをご用意しました。
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside">
-                <li>中級者向けセキュリティ対策講座</li>
-                <li>最新のサイバー攻撃トレンド</li>
-                <li>セキュリティポリシーの作成と実施</li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Link href="/e-learning">
-                <Button variant="custom">
-                  <BookOpen className="mr-2 h-4 w-4" />
-                  E-learningを開始
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
+      )}
+      {sesstion && userRole !== "ORDINARY" && (
+        <div className="space-y-4">
           <Card>
             <CardHeader>
               <CardTitle>他社とのセキュリティ対策を比較</CardTitle>
