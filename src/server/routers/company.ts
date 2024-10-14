@@ -80,7 +80,7 @@ export const companyRouter = router({
       });
 
       const companyPartScoreAverages = await Promise.all(
-        parts.map(async (part) => {
+        parts.map((part) => {
           // カテゴリ内の回答から、会社の回答を抽出し、その平均得点を計算
           // flatMapでcategorysを一次元配列に変換
           const partScores = part.categorys.flatMap((category) =>
@@ -192,7 +192,7 @@ export const companyRouter = router({
       });
 
       const industryPartScoreAverages = await Promise.all(
-        parts.map(async (part) => {
+        parts.map((part) => {
           // カテゴリ内の回答から、会社の回答を抽出し、その平均得点を計算
           // flatMapでcategorysを一次元配列に変換
           const partScores = part.categorys.flatMap((category) =>
@@ -302,7 +302,7 @@ export const companyRouter = router({
           ).toFixed(1);
 
           const companyPartScoreAverages = await Promise.all(
-            parts.map(async (part) => {
+            parts.map((part) => {
               const partScores = part.categorys.flatMap((category) =>
                 category.answers
                   .filter((answer) => answer.user.companyId === company.id)
