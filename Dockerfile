@@ -17,5 +17,3 @@ WORKDIR /app
 COPY --from=dev /app/node_modules ./node_modules
 
 COPY . .
-
-CMD ["yarn", "start"] 
