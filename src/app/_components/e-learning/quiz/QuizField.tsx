@@ -59,10 +59,8 @@ export const QuizField: FC<Props> = ({ quizList, userId, lessonId }) => {
   return (
     <div>
       {quizList.map((quiz, index) => (
-        <div className="mb-6">
-          <p key={index} className="text-xl mb-4">
-            {quiz.text}
-          </p>
+        <div key={index} className="mb-6">
+          <p className="text-xl mb-4">{quiz.text}</p>
           <RadioGroup onValueChange={handleAnswer}>
             {quiz.quizAnswer.map((choice, index) => (
               <div key={index} className="flex items-center space-x-2 mb-2">
