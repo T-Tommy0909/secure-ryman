@@ -12,7 +12,8 @@ const ProductPage: NextPage = async () => {
     redirect("/api/auth/login");
   }
 
-  await checkManagerOrSecurity(session.user.sub);
+  const userId = session.user.sub as string;
+  await checkManagerOrSecurity(userId);
 
   const productCategories = await serverApi.productCategorys.list({
     userId: session.user.sub,

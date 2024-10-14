@@ -11,7 +11,8 @@ const Comparison: NextPage = async () => {
     redirect("/api/auth/login");
   }
 
-  await checkManagerOrSecurity(session.user.sub);
+  const userId = session.user.sub as string;
+  await checkManagerOrSecurity(userId);
 
   const myCompanyResult = await serverApi.company.myCompanyResult({
     userId: session.user.sub,
