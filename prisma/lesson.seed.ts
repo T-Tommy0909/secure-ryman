@@ -10,6 +10,19 @@ export const createLessonSeed = async () => {
       tags: {
         connect: [{ id: 1 }, { id: 2 }],
       },
+      users: {
+        connect: [{ id: "auth0|66963d73a15524e673d26a0c" }],
+      },
+    },
+  });
+  await prisma.lesson.create({
+    data: {
+      title: "安全なメールの取り扱い",
+      description: "安全なメールの取り扱い方法を身につけることができます",
+      fileName: "SecureRyman_安全なメールの取り扱い.pdf",
+      tags: {
+        connect: [{ id: 3 }, { id: 2 }],
+      },
     },
   });
 };

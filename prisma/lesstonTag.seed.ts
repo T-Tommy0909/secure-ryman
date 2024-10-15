@@ -9,6 +9,9 @@ export const createLessonTagSeed = async () => {
       {
         name: "基本的対策",
       },
+      {
+        name: "メール",
+      },
     ],
     skipDuplicates: true,
   });
