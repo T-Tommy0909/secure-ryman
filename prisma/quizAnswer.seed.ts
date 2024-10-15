@@ -23,6 +23,46 @@ export const createQuizAnswerSeed = async () => {
         isCorrect: false,
         quizId: 1,
       },
+      {
+        text: "すべてのリンクをクリックして確認する",
+        isCorrect: false,
+        quizId: 2,
+      },
+      {
+        text: "リンクの URL を友人に送って確認してもらう",
+        isCorrect: false,
+        quizId: 2,
+      },
+      {
+        text: "信頼できないリンクは開かない",
+        isCorrect: true,
+        quizId: 2,
+      },
+      {
+        text: "リンクを右クリックしてコピーし、別のブラウザで開く",
+        isCorrect: false,
+        quizId: 2,
+      },
+      {
+        text: "すぐにメールを開く",
+        isCorrect: false,
+        quizId: 3,
+      },
+      {
+        text: "送信元アドレスを確認する",
+        isCorrect: true,
+        quizId: 3,
+      },
+      {
+        text: "全ての添付ファイルを開く",
+        isCorrect: false,
+        quizId: 3,
+      },
+      {
+        text: "メールの内容をSNSでシェアする",
+        isCorrect: false,
+        quizId: 3,
+      },
     ],
     skipDuplicates: true,
   });
