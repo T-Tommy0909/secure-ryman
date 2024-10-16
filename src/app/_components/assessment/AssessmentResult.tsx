@@ -103,9 +103,9 @@ export const AssessmentResultField: FC = () => {
                   options={chartOptions}
                 />
               </div>
-              <p className="mt-4 text-sm">
-                {part.category.filter((cat) => cat.points < 2).length > 0 ? (
-                  <>
+              {part.category.filter((cat) => cat.points < 2).length > 0 ? (
+                <>
+                  <p className="mt-4 text-sm">
                     以下の項目は基準値を下回る点数となりました。
                     <br />
                     {part.category
@@ -119,20 +119,22 @@ export const AssessmentResultField: FC = () => {
                               1 && "、"}
                         </span>
                       ))}
-                  </>
-                ) : (
-                  "全ての項目が基準値以上の点数となっています。"
-                )}
-              </p>
-              <p className="mt-2 text-sm">
-                <a
-                  href={`#E-leaning-${part.partName}`}
-                  className="text-blue-500 underline"
-                >
-                  E-leaning-{part.partName}
-                </a>
-                で確認しましょう。
-              </p>
+                  </p>
+                  <p className="mt-2 text-sm">
+                    <a
+                      href={`#E-leaning-${part.partName}`}
+                      className="text-blue-500 underline"
+                    >
+                      パスワードの重要性と確認方法
+                    </a>
+                    で確認しましょう。
+                  </p>
+                </>
+              ) : (
+                <p className="mt-4 text-sm">
+                  全ての項目が基準値以上の点数となっています。
+                </p>
+              )}
             </div>
           ))}
       </div>
