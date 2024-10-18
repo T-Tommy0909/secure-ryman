@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# Secure Ryman - 情報セキュリティ対策推進サービス -
+## 1. ディレクトリ構成
+- /.husky huskyの設定ファイル
+- /public ロゴ画像などの静的ファイル
+- /prisma DBに関わるprismaのファイル
+- /src 主要なプログラム
+    - /lib shadcnライブラリで使用されるプログラム
+    - /nginx nginxの設定ファイル
+    - /types 型定義ファイル
+    - /zod-types prismaスキーマのzod型定義ファイル
+    - /app フロントエンドのプログラム
+        - /_components コンポーネント
+        - /_trpc trpcの設定
+        - /_utils 汎用的な関数
+        - /api trpcのエンドポイント
+        - /assessment 診断画面プログラム
+        - /assessment-result 診断結果画面プログラム
+        - /e-learning eラーニング画面プログラム
+        - /comparison 比較画面プログラム
+        - /product 製品一覧画面プログラム
+    - /server バックエンドのプログラム
+        - /routers apiのプログラム
+        - /utils 汎用的な関数
+## 2. 開発環境
+Docker Composeを使用し、開発環境を構築しています。
+## 3. 主要技術スタック
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Prisma(PostgreSQL)
+- trpc
+- zod
+- nginx
+- Docker
