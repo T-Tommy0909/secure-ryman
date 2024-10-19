@@ -26,29 +26,49 @@ export const answerRouter = router({
             partName: part.name,
             category: await Promise.all(
               part.categorys.map(async (category) => {
+                const points =
+                  (
+                    await Promise.all(
+                      category.answers.map(async (answer) => {
+                        const answerChoice =
+                          await prisma.answerChoice.findUnique({
+                            where: {
+                              id: answer.answerChoiceId,
+                            },
+                            select: {
+                              points: true,
+                            },
+                          });
+                        if (!answerChoice) {
+                          throw new Error("AnswerChoice not found");
+                        }
+                        return answerChoice.points;
+                      }),
+                    )
+                  ).reduce((sum, points) => sum + points, 0) /
+                  category.answers.length;
+
+                const recommendLesson =
+                  points < 2 || !points
+                    ? await prisma.lesson.findFirst({
+                        where: {
+                          categoryId: category.id,
+                        },
+                        select: {
+                          id: true,
+                          title: true,
+                        },
+                      })
+                    : null;
                 return {
                   categoryName: category.name,
-                  points:
-                    (
-                      await Promise.all(
-                        category.answers.map(async (answer) => {
-                          const answerChoice =
-                            await prisma.answerChoice.findUnique({
-                              where: {
-                                id: answer.answerChoiceId,
-                              },
-                              select: {
-                                points: true,
-                              },
-                            });
-                          if (!answerChoice) {
-                            throw new Error("AnswerChoice not found");
-                          }
-                          return answerChoice.points;
-                        }),
-                      )
-                    ).reduce((sum, points) => sum + points, 0) /
-                    category.answers.length,
+                  points: points,
+                  recommendLesson: recommendLesson
+                    ? {
+                        id: String(recommendLesson.id),
+                        title: recommendLesson.title,
+                      }
+                    : null,
                 };
               }),
             ),
