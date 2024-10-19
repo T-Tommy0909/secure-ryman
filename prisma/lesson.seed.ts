@@ -7,6 +7,7 @@ export const createLessonSeed = async () => {
       description:
         "パスワードの重要性を脅威とともに知り、パスワードの適切な作成・管理方法について学ぶことができます",
       fileName: "SecureRyman_パスワードの重要性と作成・管理方法.pdf",
+      categoryId: 3,
       tags: {
         connect: [{ id: 1 }, { id: 2 }],
       },
@@ -17,6 +18,7 @@ export const createLessonSeed = async () => {
       title: "安全なメールの取り扱い",
       description: "安全なメールの取り扱い方法を身につけることができます",
       fileName: "SecureRyman_安全なメールの取り扱い.pdf",
+      categoryId: 6,
       tags: {
         connect: [{ id: 3 }, { id: 2 }],
       },
