@@ -23,14 +23,14 @@ export const createQuestionSeed = async () => {
       },
       {
         partId: 1,
-        categoryId: 4,
+        categoryId: 3,
         text: "重要情報を保管している電子媒体のパスワードはどのように設定していますか ※複数選択可",
         dependentQuestionId: 3,
         target: "ALL",
       },
       {
         partId: 1,
-        categoryId: 1,
+        categoryId: 4,
         text: "顧客に関する重要情報に対する適切なアクセス制限を行っていますか",
         dependentQuestionId: 3,
         target: "ALL",
