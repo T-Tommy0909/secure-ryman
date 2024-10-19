@@ -120,15 +120,27 @@ export const AssessmentResultField: FC = () => {
                         </span>
                       ))}
                   </p>
-                  <p className="mt-2 text-sm">
-                    <a
-                      href={`#E-leaning-${part.partName}`}
-                      className="text-blue-500 underline"
-                    >
-                      パスワードの重要性と確認方法
-                    </a>
-                    で確認しましょう。
-                  </p>
+                  {(() => {
+                    const recommendLinks = part.category.flatMap((cat) =>
+                      cat.recommendLesson ? (
+                        <a
+                          key={cat.recommendLesson.id}
+                          href={`/e-learning/${cat.recommendLesson.id}`}
+                          className="text-blue-500 underline"
+                        >
+                          {cat.recommendLesson.title}
+                        </a>
+                      ) : (
+                        []
+                      ),
+                    );
+
+                    return recommendLinks.length > 0 ? (
+                      <p className="mt-2 text-sm">
+                        {recommendLinks}で確認しましょう。
+                      </p>
+                    ) : null;
+                  })()}
                 </>
               ) : (
                 <p className="mt-4 text-sm">
