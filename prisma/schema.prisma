@@ -61,6 +61,7 @@ model Category {
   part      Part       @relation(fields: [partId], references: [id])
   questions Question[]
   answers   Answer[]
+  lessons   Lesson[]
 }
 
 model Question {
@@ -100,9 +101,11 @@ model Lesson {
   title       String
   description String
   fileName    String
+  categoryId  BigInt
   users       User[]
   tags        LessonTag[]
   quiz        Quiz[]
+  category    Category    @relation(fields: [categoryId], references: [id])
 }
 
 model LessonTag {

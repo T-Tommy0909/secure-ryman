@@ -55,6 +55,7 @@ export const LessonScalarFieldEnumSchema = z.enum([
   "title",
   "description",
   "fileName",
+  "categoryId",
 ]);
 
 export const LessonTagScalarFieldEnumSchema = z.enum(["id", "name"]);
@@ -197,6 +198,7 @@ export const LessonSchema = z.object({
   title: z.string(),
   description: z.string(),
   fileName: z.string(),
+  categoryId: z.bigint(),
 });
 
 export type Lesson = z.infer<typeof LessonSchema>;
