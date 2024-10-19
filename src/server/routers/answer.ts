@@ -60,6 +60,22 @@ export const answerRouter = router({
                         },
                       })
                     : null;
+                      
+                    if(recommendLesson){
+                      await prisma.user.update({
+                        where:{
+                          id: input.userId
+                        },
+                        data:{
+                          recommendedLessons:{
+                            connect:{
+                              id: recommendLesson.id
+                            }
+                          }
+                        }
+                      })
+                    }
+                    
                 return {
                   categoryName: category.name,
                   points: points,
